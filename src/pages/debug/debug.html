@@ -1,0 +1,21 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Debug</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <h1>Web3 Debug Info</h1>
+  <ion-list>
+    <ion-item  *ngFor="let v of info">
+      <h3>{{ v.key }}</h3>
+      <p>{{ v.value }}</p>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+
+
