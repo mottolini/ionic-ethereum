@@ -19,14 +19,16 @@ export class DebugPage {
   ) {
   }
 
-  ionViewDidLoad() {
+  ionViewDidEnter(){
     let showValues = [
       'version',
       'currentProvider.host',
       'currentProvider.connected',
-      'eth.gasPrice'
+      'eth.gasPrice',
+      'eth.defaultAccount'
     ];
 
+    this.info.length = 0;
     for (let i=0; i<showValues.length; i++) {
       let value = {
         key: showValues[i],
