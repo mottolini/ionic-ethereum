@@ -10,7 +10,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { Web3Provider } from '../providers/web3/web3';
+import { EthereumProvider } from '../providers/ethereum/ethereum';
 
 @NgModule({
   declarations: [
@@ -36,7 +36,7 @@ import { Web3Provider } from '../providers/web3/web3';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    Web3Provider
+    EthereumProvider
   ]
 })
 export class AppModule {}

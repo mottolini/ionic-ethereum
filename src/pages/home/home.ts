@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { Web3Provider } from '../../providers/web3/web3';
+import { EthereumProvider } from '../../providers/ethereum/ethereum';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
-  providers: [Web3Provider]
+  providers: [EthereumProvider]
 })
 export class HomePage {
 
@@ -13,26 +13,46 @@ export class HomePage {
   private txtAccount;
   private txtPrivKey;
   private txtPubKey;
-  private web3: Web3Provider;
+  private txtBalance;
+
+  private trnAmount = 0.1;
+  private trnAddress: string = '0xB27dC4f2F97B4361939349AE61498f1c389f012F';
+  private trnHash: string;
 
   constructor(
     public navCtrl: NavController,
-    private Web3: Web3Provider
+    private ethereum: EthereumProvider
   ) {
-    this.web3 = Web3;
   }
 
   generateMnemonic () {
-    this.txtMnemonic = this.web3.generateMnemonic();
+    this.txtMnemonic = this.ethereum.generateMnemonic();
+    this.getEthInfo();
   }
 
   async generateAccount () {
-    const account = this.web3.generateAccount();
-    this.txtAccount = account.address;
-    this.txtPrivKey = account.privateKey;
+    this.ethereum.generateAccount();
+    this.getEthInfo();
   }
 
   generateAccountFromMnemonic () {
-    this.txtPrivKey = '0x' + this.web3.generateAccountFromMnemonic(this.txtMnemonic);
+    this.ethereum.generateAccountFromMnemonic(this.txtMnemonic);
+    this.getEthInfo();
+  }
+
+  async sendTransaction() {
+    this.trnHash = await this.ethereum.sendTransaction(this.trnAddress, this.trnAmount);
+    let b = this.trnHash;
+  }
+
+  private async getEthInfo () {
+    this.txtPrivKey = this.ethereum.getPrivateKey();
+    this.txtAccount = this.ethereum.getAccount();
+    this.txtMnemonic = this.ethereum.getMnemonic();
+    this.txtBalance = await this.ethereum.getBalance();
+  }
+  
+  ionViewDidEnter(){
+    this.getEthInfo ();
   }
 }

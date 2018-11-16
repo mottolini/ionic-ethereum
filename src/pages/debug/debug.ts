@@ -1,21 +1,21 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Web3Provider } from '../../providers/web3/web3';
+import { EthereumProvider } from '../../providers/ethereum/ethereum';
 
 
 @IonicPage()
 @Component({
   selector: 'page-debug',
   templateUrl: 'debug.html',
-  providers: [Web3Provider]
+  providers: [EthereumProvider]
 })
 export class DebugPage {
-  info: [] = [];
+  info:any [] = [];
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    public web3: Web3Provider
+    public ethereum: EthereumProvider
   ) {
   }
 
@@ -32,7 +32,7 @@ export class DebugPage {
     for (let i=0; i<showValues.length; i++) {
       let value = {
         key: showValues[i],
-        value: this.web3.getValue(showValues[i])
+        value: this.ethereum.getValue(showValues[i])
       };
       this.info.push(value);
     }

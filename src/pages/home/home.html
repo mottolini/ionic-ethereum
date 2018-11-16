@@ -17,16 +17,24 @@
       <ion-input placeholder="12 Words Mnemonic" [(ngModel)]="txtMnemonic"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label stacked>Private Key</ion-label>
-      <ion-input [(ngModel)]="txtPrivKey" disabled></ion-input>
+      <h3>Private Key: {{txtPrivKey}}</h3> 
     </ion-item>
     <ion-item>
-        <ion-label stacked>Public Key</ion-label>
-        <ion-input [(ngModel)]="txtPubKey" disabled></ion-input>
-      </ion-item>
+      <ion-label stacked>Public Key</ion-label>
+      <ion-input [(ngModel)]="txtPubKey" disabled></ion-input>
+    </ion-item>
     <ion-item>
-      <ion-label stacked>Account</ion-label>
-      <ion-input [(ngModel)]="txtAccount" disabled></ion-input>
+      <h3>Account: {{txtAccount}}</h3> 
+    </ion-item>    
+    <ion-item>
+      <ion-label stacked>Balance</ion-label>
+      <ion-input [(ngModel)]="txtBalance" disabled></ion-input>
     </ion-item>
   </ion-list>
+  <ion-card>
+    <ion-input placeholder="Address" [(ngModel)]="trnAddress"></ion-input>
+    <ion-input placeholder="Amount" [(ngModel)]="trnAmount"></ion-input>
+    <button ion-button color="secondary" (click)="sendTransaction()">Send Transaction</button>
+    <h2>Transaction Id: <a href="https://rinkeby.etherscan.io/tx/{{trnHash}}">{{trnHash}}</a></h2>
+  </ion-card>
 </ion-content>
