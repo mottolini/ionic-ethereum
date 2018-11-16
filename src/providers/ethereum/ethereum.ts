@@ -24,7 +24,6 @@ export class EthereumProvider {
       console.log("Network Type: "+res);
     });
     this.accountAddress = 'BC4600F38685C3Ec2d21d1771D262A116873ac05';
-    //"0x454dD6c5EF32E81e863D21F4CBA6F00F18fed6Fa"
     this.privateKey = '8e4eb4dc0574dfe1ab5ad3e0fd338d48835f9eca6c332afe023f341027929bef';
   }
 
@@ -41,12 +40,8 @@ export class EthereumProvider {
     const seed = Bip39.mnemonicToSeed(mnemonic); //creates seed buffer
     this.root = HDKey.fromMasterSeed(seed);
     this.privateKey = this.root.privateKey.toString('hex');
-    const addrNode = this.root.derive("m/44'/60'/0'/0/0"); //line 1
-
-    const pippo = ethLib;
-/*const pubKey = ethUtil.privateToPublic(addrNode._privateKey);
-const addr = ethUtil.publicToAddress(pubKey).toString('hex');
-const address = ethUtil.toChecksumAddress(addr); */
+    const account = this.web3.eth.accounts.privateKeyToAccount('0x' + this.privateKey);
+    this.accountAddress = account.address;
   }
 
   public generateAccount() {
@@ -65,7 +60,6 @@ const address = ethUtil.toChecksumAddress(addr); */
   }
 
   public async sendTransaction(address: string, amount: number) {
-    //let az = this.web3.eth.accounts.privateKeyToAccount(this.privateKey);
     const account = this.web3.eth.accounts.privateKeyToAccount('0x' + this.privateKey);
     this.web3.eth.accounts.wallet.add(account);
     this.web3.eth.defaultAccount = account.address;
@@ -79,13 +73,20 @@ const address = ethUtil.toChecksumAddress(addr); */
       gasLimit: 21000,
       //chainId: 3
     };
-    let c = await this.web3.eth.getGasPrice();
-    //let d = await this.web3.eth.getTransactionCount(); 
-    let e = await this.web3.eth.net.getId()
-    //const transaction = await this.web3.eth.accounts.signTransaction(params, this.privateKey);
+
     const transaction = await this.web3.eth.sendTransaction(params);
-    let b = transaction;
     return transaction.transactionHash;
+  }
+
+  public async signTransaction(address: string, amount: number) {
+    const params = {
+      to: address,
+      value: this.web3.utils.toWei(amount.toString(), 'ether'),
+      gasPrice: 5000000000,
+      gasLimit: 21000,
+    };
+    const transaction = await this.web3.eth.accounts.signTransaction(params, '0x' + this.privateKey);
+    return transaction;
   }
 
   public getPrivateKey() {
@@ -99,14 +100,11 @@ const address = ethUtil.toChecksumAddress(addr); */
     return this.mnemonic;
   }
 
-/*
-  async function generateAccount() {
-    const mnemonic = await bip39.generateMnemonic();
-    await init(mnemonic);
-    console.log('init done');
-    await testNewAccont('0x8ee5356dbf8263aafdee5d0f905654488ed16f1b'); // test by sending some ether to this address
-    console.log({ msg: 'creation successfull' });
-    return mnemonic;
-  } */
+  public async getGasPrice() {
+    return await this.web3.eth.getGasPrice();
+  }
   
+  public async getChainId() {
+    return await this.web3.eth.net.getId()
+  }  
 }

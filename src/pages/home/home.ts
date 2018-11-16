@@ -42,7 +42,7 @@ export class HomePage {
 
   async sendTransaction() {
     this.trnHash = await this.ethereum.sendTransaction(this.trnAddress, this.trnAmount);
-    let b = this.trnHash;
+    this.getEthInfo();
   }
 
   private async getEthInfo () {
@@ -53,6 +53,6 @@ export class HomePage {
   }
   
   ionViewDidEnter(){
-    this.getEthInfo ();
+    this.getEthInfo();
   }
 }
