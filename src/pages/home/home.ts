@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { EthereumProvider } from '../../providers/ethereum/ethereum';
+import { AppConfig } from '../../env';
 
 @Component({
   selector: 'page-home',
@@ -15,8 +16,8 @@ export class HomePage {
   private txtPubKey;
   private txtBalance;
 
-  private trnAmount = 0.1;
-  private trnAddress: string = '0xB27dC4f2F97B4361939349AE61498f1c389f012F';
+  private trnAmount = AppConfig.ethereum.amount;
+  private trnAddress: string = AppConfig.ethereum.recipient;
   private trnHash: string;
 
   constructor(

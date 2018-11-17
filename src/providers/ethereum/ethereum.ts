@@ -23,8 +23,8 @@ export class EthereumProvider {
     this.web3.eth.net.getNetworkType(function(err, res){
       console.log("Network Type: "+res);
     });
-    this.accountAddress = 'BC4600F38685C3Ec2d21d1771D262A116873ac05';
-    this.privateKey = '8e4eb4dc0574dfe1ab5ad3e0fd338d48835f9eca6c332afe023f341027929bef';
+    this.accountAddress = AppConfig.ethereum.account;
+    this.privateKey = AppConfig.ethereum.privateKey;
   }
 
   public getValue (key: string) {
